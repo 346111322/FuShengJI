@@ -1,0 +1,33 @@
+﻿using UnityEngine;
+using System.Collections;
+using cn.bmob.io;
+//*******************
+//#TIME//
+//*******************
+public class BmobTab_${TableName} : BmobTable
+{
+    /// <summary>
+    /// Bmob服务器端我们定义的表名
+    /// </summary>
+    public const string TABLENAME = "${TableName}";
+
+    //public BmobInt value { get; set; }
+
+    /// <summary>
+    /// 成员函数
+    /// </summary>
+    /// <param name="input"></param>
+    public override void readFields(BmobInput input)
+    {
+        base.readFields(input);
+        //读取相应的字段
+        //this.value = input.getInt("PlayerScore");
+
+    }
+    public override void write(BmobOutput output, bool all)
+    {
+        base.write(output, all);
+        //写入到数据库对应的字段
+        //output.Put("PlayerScore", this.score);
+    }
+}

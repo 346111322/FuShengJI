@@ -1,0 +1,57 @@
+﻿#当前版本号
+version=0
+
+#禁止推送的时间段(24小时制),格式：小时*60+分钟
+no_push_start = 0
+no_push_end = 360
+
+#角色昵称长度(最短，最长)
+nickname_lenth = 2,12
+
+#默认声音[0,1]
+default_music_volume = 0.3
+default_sound_volume = 0.7
+
+#长时间未登录通知判定条件（小时）
+push_no_login = 24
+
+#DataPool更新时间间隔(秒)
+datapool_update_tiker = 30
+
+#进阶到第几阶解锁士气技能（共3个士气技能）,使用","进行分割
+UnlockMoraleSkills = 1,3,5
+
+#战斗中的敏捷属性,基础攻击频率(单位：秒/次)
+attack_frequency_basic = 2.0
+
+#战斗中的敏捷属性,最高攻击频率(单位：秒/次)
+attack_frequency_max = 0.5
+
+#战斗中的敏捷属性,每增加一点敏捷增加攻击频率的百分比
+attack_percent_per_one_point = 0.001
+
+#战斗中的移动速度
+attack_move_speed = 3
+
+#战斗中怒气值,满值
+rage_max = 1000
+
+#战斗中怒气值,攻击一次获得的怒气值
+rage_attack = 100
+
+#战斗中怒气值,受击一次获得的怒气值
+rage_hit = 150
+
+#战斗中怒气值,打死敌人获得的怒气值
+rage_kill = 300
+
+#战斗中头顶蹦字
+battle_hud_miss = miss
+battle_hud_immu_atk = 武力免疫
+battle_hud_immu_int = 智力免疫
+
+#闪避率计算参数,闪避率计算公式使用的常数c
+Miss_Parameter = 10
+
+#暴击率计算参数,暴击率计算公式使用的常数c
+Critical_Parameter = 10

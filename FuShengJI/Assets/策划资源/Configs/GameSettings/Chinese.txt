@@ -1,0 +1,63 @@
+﻿//整个游戏公用的错误消息提示
+ERROR_COMMON_SERVER_HANDLER = 服务器业务逻辑异常
+ERROR_COMMON_DB = 数据库异常
+ERROR_COMMON_LOGIN_TIME_OUT = 登录超时，需要重新登录
+ERROR_COMMON_LOGIN_KICKED_OFF = 有别人登陆，本地被T
+ERROR_COMMON_LOGIN_LOSED = 服务器重启，Session丢失
+
+//Loading Panel
+Loading_Label_Waiting = 加载中...
+Loading_Connect_Timeout = 网络连接超时
+
+//Login
+Login_Update_Gateway_Load = 读取网关数据中(资源更新信息和服务器列表)
+Login_Update_Gateway_NetError = 访问网关服务器失败(可能是网关服务器崩掉了),点击确定重试.
+Login_Updata_Gateway_UpdateApp = 客户端版本号过低,需要更新.
+Login_Update_Res_Confirm = 有资源需要更新，共[ff0000]{0}[-]
+Login_Update_Res_Downloading = 资源加载中
+Login_Update_Res_Unziping = 解压资源
+Login_Update_Res_Failed = 资源更新失败，点击确定重试
+Login_Update_Res_NotEnoughStorage = 本地磁盘空间不足，请释放后再更新
+
+Login_Server_Status_Recommend = [00ff00][推荐][-]
+Login_Server_Status_Hot = [f37800][火爆][-]
+Login_Server_Status_Close = [ff0000][维护][-]
+
+Login_ERROR_LOGIN_UID_WRONG = 账号UID格式错误
+Login_ERROR_REGISTER_NAME_NULL = 名字不能为空
+Login_ERROR_REGISTER_NAME_LONG = 名字过长
+Login_ERROR_REGISTER_NAME_SHORT = 名字过短
+Login_ERROR_REGISTER_NAME_DUPLICATED = 名字有重复
+Login_ERROR_REGISTER_NAME_ILLEGAL = 名字有非法字符
+
+Shop_DianJiang_Title = 群雄武将招募_魏国武将招募_蜀国武将招募_吴国武将招募
+Shop_DianJiang_Dec = 较高几率开出4星群雄武将，一定几率开出3星、5星，点将十次保底1张5星。
+Shop_DianJiang_Time = 还有次必出橙色武将
+Shop_DianJiang_ButtonOne = 抽取一次
+Shop_DianJiang_ButtonOne_Money = 花费元宝：320
+Shop_DianJiang_ButtonTen = 抽取十次
+Shop_DianJiang_ButtonTen_Money = 花费元宝：3200
+
+
+CardInfo_Country_0 = 魏
+CardInfo_Country_1 = 蜀
+CardInfo_Country_2 = 吴
+CardInfo_Country_3 = 群雄
+
+Attr_Type_Name_0 = 生命
+Attr_Type_Name_1 = 兵力
+Attr_Type_Name_2 = 防御
+Attr_Type_Name_3 = 武力
+Attr_Type_Name_4 = 智力
+Attr_Type_Name_5 = 暴击
+Attr_Type_Name_6 = 韧性
+Attr_Type_Name_7 = 命中
+Attr_Type_Name_8 = 闪避
+Attr_Type_Name_9 = 吸血
+Attr_Type_Name_10 = 反弹
+Attr_Increase = 提升
+Attr_Already_Inc_Start = （已激活
+Attr_Already_Inc_End = ）
+
+Cannot_Level_Up = [00ff00]（最高等级）
+Not_Enough_Material = 材料不足

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plist>
+  <!-- Inner descript  = '\n' ${T} = '\t' ${L} = '<' ${R} = '>' ${C} = '&' -->
+
+  <descript>// This code created by tools automatically, you would not modify it.</descript>
+
+  <import>
+	using System;
+	using System.Collections.Generic;
+	using System.Collections;
+	using BH.Core.Utils;
+  </import>
+
+  <namespace>${N}namespace BH.Core.Configs${N}{</namespace>
+  <classhead>
+    ${T}[Serializable]
+    ${T}public  class Tab_${CodeName} : ITableOperate${N}${T}{
+<!--    #if UNITY_EDITOR-->
+    ${T}${T}private const string TAB_FILE_DATA = "DataTable/${FileNameWithExt}";
+<!--    #else-->
+<!--    ${T}${T}private const string TAB_FILE_DATA = "${FileName}"; Assets/Resources/ -->
+<!--    #endif-->
+    ${T}${T}private const int VALUE_NUM_PER_ROW = ${ValueNum};	// not contains id
+    ${T}${T}public static bool IsTableLoaded = false;
+    ${T}${T}public enum _ID
+    ${T}${T}{
+    ${T}${T}${T}${FULLENUM}
+    ${T}${T}}
+    ${T}${T}public static string GetInstanceFile(){return TAB_FILE_DATA; }
+  </classhead>
+  
+  <variables>
+  <!--Just be used to mark. The content will be replaced with 'single' and 'repeat' content.-->
+  </variables>
+  <!--This below is Body-->
+  <single>
+	${T}${T}private  ${type}  m_${Variable};
+	${T}${T}public   ${type} ${Variable} { get{ return m_${Variable};}}
+  </single>
+  <singleEncrypt>
+	${T}${T}private  ${type}  m_${Variable};
+	${T}${T}public   ${type} ${Variable} { get{ return BasicUtil.Decrypt${type}Value(m_${Variable});}}
+  </singleEncrypt>
+  <repeat>
+	${T}${T}public   int Get${Variable}Count() { return ${COUNT}; } 
+	${T}${T}private   ${type}[]  m_${Variable} = new ${type}[${COUNT}];
+	${T}${T}public    ${type} Get${Variable}byIndex(int idx)
+	${T}${T}{
+	${T}${T}${T}if(idx${R}=0 ${C}${C} idx${L}${COUNT}) return m_${Variable}[idx];
+	${T}${T}${T}return ${defaultvalue};
+	${T}${T}}
+  </repeat>
+  <repeatEncrypt>
+	${T}${T}public   int Get${Variable}Count() { return ${COUNT}; } 
+	${T}${T}private   ${type}[]  m_${Variable} = new ${type}[${COUNT}];
+	${T}${T}public    ${type} Get${Variable}byIndex(int idx)
+	${T}${T}{
+	${T}${T}${T}if(idx${R}=0 ${C}${C} idx${L}${COUNT}) return BasicUtil.Decrypt${type}Value(m_${Variable}[idx]);
+	${T}${T}${T}return ${defaultvalue};
+	${T}${T}}
+  </repeatEncrypt>
+
+  <inittable>
+	${T}${T}public  static bool LoadTable(Hashtable _tab, DataTableStructure _tabStructure, bool _isDeseriaAll)
+	${T}${T}{
+<!--	#if UNITY_EDITOR-->
+	${T}${T}${T}if(!DataTable.ReaderPList(GetInstanceFile(), VALUE_NUM_PER_ROW, SerializableTable, _tab, _tabStructure, _isDeseriaAll))
+<!--	#else-->
+<!--	${T}${T}${T}if(!DataTable.ReaderPList(GetInstanceFile(), SerializableTable, _tab, _tabStructure, _isDeseriaAll))-->
+<!--	#endif-->
+	${T}${T}${T}{
+	${T}${T}${T}${T}throw  TableException.ErrorReader("Load File{0} Fail!!!",GetInstanceFile());
+	${T}${T}${T}}
+	${T}${T}${T}IsTableLoaded = true;
+	${T}${T}${T}return true;
+	${T}${T}}
+	
+	${T}${T}public static Tab_${CodeName} LoadTableItem(int nIdx, Hashtable _tab, DataTableStructure _tabStructure)
+	${T}${T}{
+	${T}${T}${T}string[] rows = _tabStructure.GetRow(nIdx);
+	${T}${T}${T}if (rows != null)
+	${T}${T}${T}{
+	${T}${T}${T}${T}return SerializableTableItem(rows, nIdx, _tab);
+	${T}${T}${T}}
+	${T}${T}${T}return null;
+	${T}${T}}
+		
+	${T}${T}public static void SerializableTable(string[] values,int nKey,Hashtable _hash)
+	${T}${T}{
+	${T}${T}${T}if (values == null)
+    ${T}${T}${T}{
+    ${T}${T}${T}${T}throw TableException.ErrorReader("values is null. Table: {0}  Key:{1}.", GetInstanceFile(), nKey);
+    ${T}${T}${T}}
+	${T}${T}${T}if (values.Length != VALUE_NUM_PER_ROW)
+	${T}${T}${T}{
+	${T}${T}${T}${T}throw TableException.ErrorReader("Load {0}  error as CodeSize:{1} not Equal DataSize:{2}", GetInstanceFile(), VALUE_NUM_PER_ROW, values.Length);
+	${T}${T}${T}}
+	${T}${T}${T}Tab_${CodeName} tabData = new Tab_${CodeName}();
+	${T}${T}${T}${FULLREADER}
+	${T}${T}${T}_hash.Add(nKey,tabData);
+	${T}${T}}
+	
+	${T}${T}public static Tab_${CodeName} SerializableTableItem(string[] values,int nKey,Hashtable _hash)
+	${T}${T}{
+	${T}${T}${T}if (values == null)
+    ${T}${T}${T}{
+    ${T}${T}${T}${T}throw TableException.ErrorReader("values is null. Table: {0}  Key:{1}.", GetInstanceFile(), nKey);
+    ${T}${T}${T}}
+	${T}${T}${T}if (values.Length != VALUE_NUM_PER_ROW)
+	${T}${T}${T}{
+	${T}${T}${T}${T}throw TableException.ErrorReader("Load {0}  error as CodeSize:{1} not Equal DataSize:{2}", GetInstanceFile(), VALUE_NUM_PER_ROW, values.Length);
+	${T}${T}${T}}
+	${T}${T}${T}Tab_${CodeName} tabData = new Tab_${CodeName}();
+	${T}${T}${T}${FULLREADER}
+	${T}${T}${T}_hash.Add(nKey,tabData);
+	${T}${T}${T}return tabData;
+	${T}${T}}
+  </inittable>
+
+  <tail>${T}}${N}}</tail>
+</plist>

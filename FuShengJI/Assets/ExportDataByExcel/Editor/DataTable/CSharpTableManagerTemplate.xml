@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plist>
+  <!-- Inner descript ${N} = '\n' ${T} = '\t' ${L} = '<' ${R} = '>' ${C} = '&' -->
+  
+  <descript>// This code created by tools automatically, you would not modify it.</descript>
+  
+  <import>
+	//#define TEST_ASSETBUNDLE
+	//#define TEST_BINARY
+	using System;
+	using System.Collections;
+	using UnityEngine;
+	using BH.Core.Debug;
+	using System.IO;
+	using BH.Core.Utils;
+  </import>
+  
+  <namespace>${N}namespace BH.Core.Configs${N}{</namespace>
+  <classhead>
+	${T}public interface ITableOperate
+	${T}{
+	${T}${T}//bool LoadTable(Hashtable _tab);
+	${T}${T}//string GetInstanceFile();
+	${T}}
+	${T}public  delegate void SerializableTable(string[] values, int nKey, Hashtable _hash);
+	${T}[Serializable]
+	${T}public  class DataTable${N}${T}{
+	${T}${T}private DataTable() 
+	${T}${T}{
+	${T}${T}${T}BasicUtil.GenerateCryptPlusValue();
+	${T}${T}}
+	${T}${T}private static DataTable instance = null;
+	${T}${T}public static DataTable Instance
+	${T}${T}{
+	${T}${T}${T}get
+	${T}${T}${T}{
+	${T}${T}${T}${T}if(instance == null)
+	${T}${T}${T}${T}{
+	${T}${T}${T}${T}${T}instance = new DataTable();
+	${T}${T}${T}${T}}
+	${T}${T}${T}${T}return instance;
+	${T}${T}${T}}
+	${T}${T}}
+<!--	#if UNITY_EDITOR-->
+	${T}${T}public static bool ReaderPList(String _tabName, int valueNum, SerializableTable _fun, Hashtable _hash, DataTableStructure _tableStructture, bool _isDeseriaAll)
+<!--	#else-->
+<!--	${T}${T}public static bool ReaderPList(String _tabName, SerializableTable _fun, Hashtable _hash, DataTableStructure _tableStructture, bool _isDeseriaAll)-->
+<!--	#endif-->
+	${T}${T}{
+<!--	#if UNITY_EDITOR-->
+<!--	#if TEST_ASSETBUNDLE-->
+<!--	${T}${T}${T}string[] list = _tabName.Split('.');-->
+<!--	${T}${T}${T}string tabName = list[0].Substring(list[0].LastIndexOf('/') + 1);-->
+<!--	${T}${T}${T}TextAsset txtAsset = AssetLoader.Instance.GetAsset(AssetType.DataTable, tabName) as TextAsset;-->
+<!--	${T}${T}${T}AssetLoader.Instance.Unload(AssetType.DataTable, tabName);-->
+<!--	#elif TEST_BINARY-->
+<!--	${T}${T}${T}_tabName = _tabName.Replace("DataTable", "DataTableBinary");-->
+<!--	${T}${T}${T}_tabName = Path.ChangeExtension(_tabName, "bytes");-->
+<!--	${T}${T}${T}TextAsset txtAsset = UnityEditor.AssetDatabase.LoadAssetAtPath(_tabName, typeof(TextAsset)) as TextAsset;-->
+<!--	#else-->
+<!--	${T}${T}${T}TextAsset txtAsset = UnityEditor.AssetDatabase.LoadAssetAtPath(_tabName, typeof(TextAsset)) as TextAsset;-->
+<!--	#endif-->
+<!--	#else-->
+    ${T}${T}${T}TextAsset txtAsset = Resources.Load(_tabName,typeof(TextAsset)) as TextAsset;
+    <!--	${T}${T}${T}TextAsset txtAsset = AssetLoader.Instance.GetAsset(AssetType.DataTable, _tabName) as TextAsset;-->
+<!--    ${T}${T}${T}AssetLoader.Instance.Unload(AssetType.DataTable, _tabName);-->
+<!--	#endif -->
+<!--	#if UNITY_EDITOR -->
+<!--	#if TEST_ASSETBUNDLE || TEST_BINARY -->
+<!--	${T}${T}${T}MemoryStream ms = new MemoryStream(txtAsset.bytes); -->
+<!--	${T}${T}${T}_tableStructture.Deserialize(ms, _fun, _hash, _isDeseriaAll);-->
+<!--	${T}${T}${T}ms.Close();-->
+<!--	${T}${T}${T}txtAsset = null;-->
+<!--	#else-->
+	${T}${T}${T}string[] alldataRow = txtAsset.text.Split('\n');
+	${T}${T}${T}string[] values = new string[valueNum];
+	${T}${T}${T}int cnt = alldataRow.Length;
+	${T}${T}${T}string line = "";
+	${T}${T}${T}for(int idx = 0; idx ${L} cnt; ++idx)
+	${T}${T}${T}{
+	${T}${T}${T}${T}line = alldataRow[idx];
+	${T}${T}${T}${T}if(String.IsNullOrEmpty(line))continue;
+	${T}${T}${T}${T}string[] strCol = line.Split('\t');
+	${T}${T}${T}${T}if (strCol.Length == 0) continue;
+	${T}${T}${T}${T}string skey = strCol[0];
+	${T}${T}${T}${T}Array.Copy(strCol, 1, values, 0, valueNum);
+	${T}${T}${T}${T}if (string.IsNullOrEmpty(skey)) return false;
+	${T}${T}${T}${T}_fun(values, int.Parse(skey), _hash);
+	${T}${T}${T}}
+<!--	#endif-->
+<!--	#else-->
+<!--	${T}${T}${T}MemoryStream ms = new MemoryStream(txtAsset.bytes);-->
+<!--	${T}${T}${T}_tableStructture.Deserialize(ms, _fun, _hash, _isDeseriaAll);-->
+<!--	${T}${T}${T}ms.Close();-->
+<!--	${T}${T}${T}txtAsset = null;-->
+<!--	#endif-->
+	${T}${T}${T}return true;
+	${T}${T}}
+  </classhead>
+
+  <!--This below is Body-->
+  <managerdata>
+	${T}${T}private Hashtable m_${CodeName} = new Hashtable();
+	${T}${T}public Hashtable Get${CodeName}()
+	${T}${T}{
+	${T}${T}${T}if (!Tab_${CodeName}.IsTableLoaded)
+	${T}${T}${T}{
+<!--	#if UNITY_EDITOR-->
+<!--	${T}${T}${T}${T}Tab_${CodeName}.LoadTable(m_${CodeName}, m_${CodeName}Structure, true);-->
+<!--	#else-->
+	${T}${T}${T}${T}Tab_${CodeName}.LoadTable(m_${CodeName}, m_${CodeName}Structure, ${IsDeseriaAll});
+<!--	#endif-->
+	${T}${T}${T}}
+	${T}${T}${T}return m_${CodeName};
+	${T}${T}}
+	${T}${T}private DataTableStructure m_${CodeName}Structure = new DataTableStructure();
+  </managerdata>
+  
+  <initsingle>
+<!--	#if UNITY_EDITOR-->
+<!--	${T}${T}${T}if(Tab_${CodeName}.LoadTable(m_${CodeName}, m_${CodeName}Structure, true))-->
+<!--	#else-->
+	${T}${T}${T}if(Tab_${CodeName}.LoadTable(m_${CodeName}, m_${CodeName}Structure, ${IsDeseriaAll}))
+<!--	#endif-->
+	${T}${T}${T}{
+	${T}${T}${T}${T}Log.Message(string.Format("Load Table:{0} OK! Record({1})",Tab_${CodeName}.GetInstanceFile(),m_${CodeName}.Count));
+	${T}${T}${T}}
+	${T}${T}${T}yield return null;
+  </initsingle>
+  <inittable>
+    ${T}${T}public  IEnumerator InitTable()
+    ${T}${T}{
+    ${T}${T}${T}${FULLINIT}
+    ${T}${T}${T}yield return null;
+    ${T}${T}}
+  </inittable>
+
+  <manageropt>
+	${T}${T}public Tab_${CodeName} Get${CodeName}ById(int nIdex)
+	${T}${T}{
+	${T}${T}${T}if( Get${CodeName}().ContainsKey(nIdex))
+	${T}${T}${T}{
+	${T}${T}${T}${T}return m_${CodeName}[nIdex] as Tab_${CodeName};
+	${T}${T}${T}}
+	${T}${T}${T}else
+	${T}${T}${T}{
+	${T}${T}${T}${T}return Tab_${CodeName}.LoadTableItem(nIdex, m_${CodeName}, m_${CodeName}Structure);
+	${T}${T}${T}}
+	${T}${T}}
+
+  </manageropt>
+
+  <tail>${T}}${N}}</tail>
+  </plist>
+  
